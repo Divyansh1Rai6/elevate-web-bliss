@@ -625,23 +625,41 @@ function Footer() {
 }
 
 function Index() {
+  const sections = [
+    <Hero key="hero" />,
+    <Marquee key="marquee" />,
+    <About key="about" />,
+    <Services key="services" />,
+    <Stats key="stats" />,
+    <Technology key="technology" />,
+    <Cases key="cases" />,
+    <Pricing key="pricing" />,
+    <Process key="process" />,
+    <Testimonials key="testimonials" />,
+    <Contact key="contact" />,
+  ];
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="min-h-screen bg-background"
+    >
       <Nav />
       <main>
-        <Hero />
-        <Marquee />
-        <About />
-        <Services />
-        <Stats />
-        <Technology />
-        <Cases />
-        <Pricing />
-        <Process />
-        <Testimonials />
-        <Contact />
+        {sections.map((s, i) => (
+          <motion.div
+            key={s.key}
+            initial={i === 0 ? false : { opacity: 0, y: 32 }}
+            whileInView={i === 0 ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {s}
+          </motion.div>
+        ))}
       </main>
       <Footer />
-    </div>
+    </motion.div>
   );
 }
