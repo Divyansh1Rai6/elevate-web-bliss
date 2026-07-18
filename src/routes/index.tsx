@@ -108,7 +108,7 @@ function Nav() {
           </div>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 }
 
