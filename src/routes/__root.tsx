@@ -80,10 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Nextgen Entrade — Enterprise Software, Cloud & Digital Marketing" },
       { name: "description", content: "Nextgen Entrade builds future-ready mobile apps, scalable cloud platforms, and data-driven digital marketing for startups and global enterprises." },
       { name: "author", content: "Nextgen Entrade" },
-      { property: "og:title", content: "Nextgen Entrade — Empowering Global Digital Tomorrow" },
-      { property: "og:description", content: "PhD-led innovation, end-to-end ownership, ISO 27001 & CMMI Level 5. 350+ engineers delivering premium software and marketing outcomes." },
+      { property: "og:title", content: "Nextgen Entrade — Enterprise Software, Cloud & Digital Marketing" },
+      { property: "og:description", content: "Nextgen Entrade builds future-ready mobile apps, scalable cloud platforms, and data-driven digital marketing for startups and global enterprises." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Nextgen Entrade — Enterprise Software, Cloud & Digital Marketing" },
+      { name: "twitter:description", content: "Nextgen Entrade builds future-ready mobile apps, scalable cloud platforms, and data-driven digital marketing for startups and global enterprises." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/84bec728-03c0-48dc-9430-706e7e74b72c/id-preview-85c4dd8a--d6c0038b-229a-4ece-b74d-4a8ab3bdb5a4.lovable.app-1784361832939.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/84bec728-03c0-48dc-9430-706e7e74b72c/id-preview-85c4dd8a--d6c0038b-229a-4ece-b74d-4a8ab3bdb5a4.lovable.app-1784361832939.png" },
     ],
     links: [
       {
