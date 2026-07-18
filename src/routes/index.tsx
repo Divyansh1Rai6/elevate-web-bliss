@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { motion, type Variants } from "framer-motion";
 import {
   ArrowRight, ArrowUpRight, Menu, X, Sparkles, Shield, Users, Zap, Trophy, Globe,
-  Code2, Smartphone, Cloud, LineChart, Search, Lock, CheckCircle2, Quote, Mail, Phone, MapPin,
+  CheckCircle2, Quote, Mail, Phone, MapPin,
 } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 import caseHealth from "@/assets/case-health.jpg";
@@ -11,8 +12,43 @@ import caseEcom from "@/assets/case-ecom.jpg";
 import caseMfg from "@/assets/case-mfg.jpg";
 import caseEdu from "@/assets/case-edu.jpg";
 import caseMedia from "@/assets/case-media.jpg";
+import svcWeb from "@/assets/service-web.jpg";
+import svcMarketing from "@/assets/service-marketing.jpg";
+import svcCloud from "@/assets/service-cloud.jpg";
+import svcMobile from "@/assets/service-mobile.jpg";
+import svcEcom from "@/assets/service-ecom.jpg";
 
 export const Route = createFileRoute("/")({ component: Index });
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+};
+
+function Reveal({
+  children,
+  delay = 0,
+  className,
+  as: _as,
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+  as?: "div";
+}) {
+  return (
+    <motion.div
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-80px" }}
+      variants={fadeUp}
+      transition={{ delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 const NAV = [
   { label: "Home", href: "#home" },
