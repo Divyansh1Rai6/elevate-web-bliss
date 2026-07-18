@@ -213,35 +213,56 @@ function About() {
 
 function Services() {
   const services = [
-    { icon: Smartphone, title: "Mobile App Development", body: "Intuitive, high-performance iOS & Android apps with the latest frameworks and UX best practices." },
-    { icon: Cloud, title: "Scalable Cloud Services", body: "Cloud migrations, architecture, CDN, caching, load testing, and security audits — enterprise ready." },
-    { icon: LineChart, title: "Digital Marketing", body: "SEO, PPC, content, and social campaigns backed by analytics dashboards and measurable ROI." },
-    { icon: Code2, title: "Custom Software", body: "Bespoke platforms across banking, healthcare, manufacturing, retail, education, and more." },
-    { icon: Search, title: "QA & Testing", body: "Automated testing scripts, sectoral compliance audits, and 75% reduction in time-to-market." },
-    { icon: Lock, title: "Security & Compliance", body: "ISO 27001 and CMMI Level 5 aligned processes, plus dedicated security tooling and audits." },
+    { img: svcWeb, title: "Website Development", body: "Fast, accessible, SEO-ready marketing sites and web platforms crafted with modern frameworks and thoughtful UX." },
+    { img: svcMarketing, title: "Digital Marketing", body: "SEO, PPC, content, and social campaigns backed by analytics dashboards and measurable ROI." },
+    { img: svcCloud, title: "Cloud Application Development", body: "Scalable, secure cloud-native apps — architecture, migrations, DevOps, and enterprise-grade reliability." },
+    { img: svcMobile, title: "Mobile Application Development", body: "Intuitive, high-performance iOS & Android apps with the latest frameworks and UX best practices." },
+    { img: svcEcom, title: "E-commerce Consultancy", body: "Storefront strategy, marketplace onboarding, and conversion optimization across Shopify, Magento, and custom stacks." },
   ];
   return (
     <section id="services" className="py-24 lg:py-32 bg-cream/50">
       <div className="container-page">
-        <div className="max-w-2xl">
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Services</div>
-          <h2 className="mt-4 font-display text-4xl sm:text-5xl leading-[1.05]">
-            Empowering your business with <span className="italic text-gradient-gold">scalable cloud</span> services.
-          </h2>
-        </div>
-        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Reveal>
+          <div className="max-w-2xl">
+            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Services</div>
+            <h2 className="mt-4 font-display text-4xl sm:text-5xl leading-[1.05]">
+              Empowering your business with <span className="italic text-gradient-gold">scalable cloud</span> services.
+            </h2>
+          </div>
+        </Reveal>
+        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
           {services.map((s, i) => (
-            <div key={s.title} className="group relative rounded-2xl bg-card hairline p-7 overflow-hidden transition-all hover:-translate-y-1">
-              <div aria-hidden className="absolute -top-16 -right-16 h-40 w-40 rounded-full bg-gold/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary text-primary-foreground">
-                  <s.icon className="h-5 w-5" />
+            <motion.article
+              key={s.title}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -6 }}
+              className="group h-full flex flex-col overflow-hidden rounded-2xl bg-card hairline shadow-sm hover:shadow-[0_28px_60px_-24px_oklch(0.22_0.05_265_/_0.28)] transition-shadow duration-500"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img
+                  src={s.img}
+                  alt={s.title}
+                  loading="lazy"
+                  width={1024}
+                  height={640}
+                  className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
+                />
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-70" />
+                <div className="absolute top-4 left-4 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-medium tracking-[0.18em] uppercase text-primary">
+                  0{i + 1}
                 </div>
-                <h3 className="mt-5 text-xl font-medium" style={{ fontFamily: "var(--font-sans)" }}>{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.body}</p>
-                <div className="mt-6 text-xs text-muted-foreground/60">0{i + 1}</div>
               </div>
-            </div>
+              <div className="flex flex-col flex-1 p-6">
+                <h3 className="text-xl font-medium leading-tight" style={{ fontFamily: "var(--font-sans)" }}>{s.title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed flex-1">{s.body}</p>
+                <div className="mt-6 inline-flex items-center gap-1 text-sm text-primary group-hover:gap-2 transition-all">
+                  Learn more <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </div>
+              </div>
+            </motion.article>
           ))}
         </div>
       </div>
