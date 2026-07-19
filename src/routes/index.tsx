@@ -104,13 +104,18 @@ function Hero() {
 
 function Marquee() {
   const items = ["ISO 27001", "CMMI Level 5", "AWS Partner", "Google Cloud", "Microsoft Azure", "PhD-Led R&D", "Agile Delivery", "350+ Engineers"];
+  const loop = [...items, ...items];
   return (
-    <div className="border-y border-border bg-cream/40 py-6 overflow-hidden">
-      <div className="container-page">
-        <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm text-muted-foreground">
-          {items.map((i) => <span key={i} className="font-medium">{i}</span>)}
-        </div>
-      </div>
+    <div className="border-y border-black/10 bg-gold py-6 overflow-hidden">
+      <motion.div
+        className="flex items-center gap-x-14 whitespace-nowrap w-max"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 22, ease: "linear", repeat: Infinity }}
+      >
+        {loop.map((i, idx) => (
+          <span key={idx} className="text-sm font-semibold text-[oklch(0.15_0.03_260)] shrink-0">{i}</span>
+        ))}
+      </motion.div>
     </div>
   );
 }
