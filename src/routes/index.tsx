@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { motion, type Variants } from "framer-motion";
+import { useRef, useState, type ReactNode } from "react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import {
-  ArrowRight, ArrowUpRight, Menu, X, Sparkles, Shield, Users, Zap, Trophy, Globe,
+  ArrowRight, ArrowUpRight, Sparkles, Shield, Users, Zap, Trophy, Globe,
   CheckCircle2, Quote, Mail, Phone, MapPin,
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Nav } from "@/components/site/Nav";
+import { Footer } from "@/components/site/Footer";
 import heroImg from "@/assets/hero.jpg";
 import caseHealth from "@/assets/case-health.jpg";
 import caseFinance from "@/assets/case-finance.jpg";
@@ -48,78 +50,6 @@ function Reveal({
     >
       {children}
     </motion.div>
-  );
-}
-
-const NAV = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Technology", href: "#technology" },
-  { label: "Case Studies", href: "#cases" },
-  { label: "News", href: "#news" },
-  { label: "Contact", href: "#contact" },
-];
-
-function Nav() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 8);
-    on(); window.addEventListener("scroll", on);
-    return () => window.removeEventListener("scroll", on);
-  }, []);
-  return (
-    <motion.header
-      initial={{ y: -24, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "backdrop-blur-xl bg-background/70 border-b border-border/60" : ""}`}
-    >
-      <div className="container-page flex h-16 items-center justify-between gap-6">
-        <a href="#home" className="flex items-center gap-2 min-w-0">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
-            <span className="font-display text-lg leading-none">N</span>
-          </span>
-          <span className={`font-display text-xl tracking-tight truncate transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}>
-            Nextgen Entrade
-          </span>
-        </a>
-        <nav className="hidden lg:flex items-center gap-1">
-          {NAV.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              className={`px-3 py-2 text-sm transition-colors ${scrolled ? "text-muted-foreground hover:text-foreground" : "text-white/70 hover:text-white"}`}
-            >
-              {n.label}
-            </a>
-          ))}
-        </nav>
-        <div className="hidden lg:flex items-center gap-3">
-          <a href="#contact" className="group inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition">
-            Start a project <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
-        </div>
-        <button
-          className={`lg:hidden p-2 transition-colors ${scrolled ? "text-foreground" : "text-white"}`}
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
-      {open && (
-        <div className="lg:hidden border-t border-border bg-background">
-          <div className="container-page py-4 flex flex-col gap-1">
-            {NAV.map((n) => (
-              <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="py-2 text-sm text-foreground">{n.label}</a>
-            ))}
-            <a href="#contact" onClick={() => setOpen(false)} className="mt-3 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground">Start a project</a>
-          </div>
-        </div>
-      )}
-    </motion.header>
   );
 }
 
@@ -691,8 +621,7 @@ function Testimonials() {
 }
 
 function Contact() {
-  const formRef = useRef<HTMLFormElement>(null);
-  const [sent, setSent] = useState(false);
+ 
   return (
     <section id="contact" className="py-24 lg:py-32 bg-[oklch(0.15_0.03_260)] text-white">
       <div className="container-page grid lg:grid-cols-[1fr_1.1fr] gap-14 items-start">
@@ -706,29 +635,94 @@ function Contact() {
             <div className="flex items-start gap-3"><MapPin className="h-5 w-5 text-gold mt-0.5" /><div><div className="text-sm text-white/60">HQ</div><div>Ahmedabad, India</div></div></div>
           </div>
         </div>
-        <form ref={formRef} onSubmit={(e) => { e.preventDefault(); setSent(true); formRef.current?.reset(); setTimeout(() => setSent(false), 4000); }}
-          className="rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur p-8 space-y-5">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <Field label="Full name" name="name" />
-            <Field label="Work email" name="email" type="email" />
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <Field label="Company" name="company" />
-            <Field label="Budget range" name="budget" placeholder="₹10L – ₹50L" />
-          </div>
-          <div>
-            <label className="text-xs uppercase tracking-wider text-white/60">Project details</label>
-            <textarea name="message" rows={5} required className="mt-2 w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/30 transition" placeholder="Tell us about your goals…" />
-          </div>
-          <button type="submit" className="group w-full inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-medium text-[oklch(0.15_0.03_260)] hover:bg-[oklch(0.78_0.13_75)] transition">
-            {sent ? "Thank you — we'll be in touch" : "Send inquiry"} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </button>
-        </form>
+        <LampContactCard />
       </div>
     </section>
   );
 }
+function LampContactCard() {
+  const [awake, setAwake] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [sent, setSent] = useState(false);
 
+  return (
+    <div className="relative rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur p-8 flex flex-col items-center justify-center min-h-[440px] overflow-hidden">
+      <motion.div
+        aria-hidden
+        className="absolute w-72 h-72 rounded-full blur-3xl pointer-events-none"
+        style={{ background: "radial-gradient(circle, oklch(0.72 0.13 75 / 0.35), transparent 70%)" }}
+        animate={{ opacity: awake ? 1 : 0, scale: awake ? 1 : 0.6 }}
+        transition={{ duration: 0.6 }}
+      />
+
+      <AnimatePresence mode="wait">
+        {!awake ? (
+          <motion.button
+            key="lamp"
+            type="button"
+            onClick={() => setAwake(true)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.4 }}
+            className="relative z-10 flex flex-col items-center gap-4 group"
+            aria-label="Wake up the lamp to start a conversation"
+          >
+            <svg width="140" height="160" viewBox="0 0 140 160" fill="none">
+              <path d="M35 60 L105 60 L120 20 L20 20 Z" fill="oklch(0.72 0.13 75 / 0.15)" stroke="oklch(0.72 0.13 75)" strokeWidth="2" />
+              <path d="M55 42 q6 6 12 0" stroke="oklch(0.98 0.005 90)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              <path d="M78 42 q6 6 12 0" stroke="oklch(0.98 0.005 90)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              <line x1="70" y1="60" x2="70" y2="130" stroke="oklch(0.5 0.02 260)" strokeWidth="3" />
+              <ellipse cx="70" cy="135" rx="24" ry="6" fill="oklch(0.3 0.03 260)" />
+            </svg>
+            <span className="text-sm text-white/60 group-hover:text-white transition-colors">Click to wake me up</span>
+          </motion.button>
+        ) : (
+          <motion.div
+            key="form"
+            initial={{ opacity: 0, y: 16, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="relative z-10 w-full"
+          >
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <svg width="56" height="64" viewBox="0 0 140 160" fill="none">
+                <path d="M35 60 L105 60 L120 20 L20 20 Z" fill="oklch(0.72 0.13 75 / 0.25)" stroke="oklch(0.72 0.13 75)" strokeWidth="2" />
+                <circle cx="61" cy="40" r="3.5" fill="oklch(0.98 0.005 90)" />
+                <circle cx="90" cy="40" r="3.5" fill="oklch(0.98 0.005 90)" />
+                <path d="M62 50 q8 5 16 0" stroke="oklch(0.98 0.005 90)" strokeWidth="2" strokeLinecap="round" fill="none" />
+                <line x1="70" y1="60" x2="70" y2="130" stroke="oklch(0.5 0.02 260)" strokeWidth="3" />
+                <ellipse cx="70" cy="135" rx="24" ry="6" fill="oklch(0.3 0.03 260)" />
+              </svg>
+              <span className="text-white font-display text-lg">Hi, let's talk</span>
+            </div>
+            <form
+              ref={formRef}
+              onSubmit={(e) => { e.preventDefault(); setSent(true); formRef.current?.reset(); setTimeout(() => setSent(false), 4000); }}
+              className="space-y-5"
+            >
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Field label="Full name" name="name" />
+                <Field label="Work email" name="email" type="email" />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Field label="Company" name="company" />
+                <Field label="Budget range" name="budget" placeholder="₹10L – ₹50L" />
+              </div>
+              <div>
+                <label className="text-xs uppercase tracking-wider text-white/60">Project details</label>
+                <textarea name="message" rows={4} required className="mt-2 w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/30 transition" placeholder="Tell us about your goals…" />
+              </div>
+              <button type="submit" className="group w-full inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-medium text-[oklch(0.15_0.03_260)] hover:bg-[oklch(0.78_0.13_75)] transition">
+                {sent ? "Thank you — we'll be in touch" : "Send inquiry"} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 function Field({ label, name, type = "text", placeholder }: { label: string; name: string; type?: string; placeholder?: string }) {
   return (
     <label className="block">
@@ -736,42 +730,6 @@ function Field({ label, name, type = "text", placeholder }: { label: string; nam
       <input required name={name} type={type} placeholder={placeholder}
         className="mt-2 w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/30 transition" />
     </label>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="bg-[oklch(0.12_0.025_260)] text-white/70 border-t border-white/5">
-      <div className="container-page py-14 grid gap-10 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <div className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-gold text-[oklch(0.15_0.03_260)] font-display">N</span>
-            <span className="font-display text-xl text-white">Nextgen Entrade</span>
-          </div>
-          <p className="mt-4 text-sm max-w-sm leading-relaxed">Empowering Global Digital Tomorrow From India. Founded 2017 · Ahmedabad · 350+ engineers worldwide.</p>
-        </div>
-        <div>
-          <div className="text-xs uppercase tracking-wider text-white/50">Company</div>
-          <ul className="mt-4 space-y-2 text-sm">
-            {["About", "Services", "Technology", "Case Studies"].map(x => <li key={x}><a href={`#${x.toLowerCase().replace(/ /g, "")}`} className="hover:text-white transition">{x}</a></li>)}
-          </ul>
-        </div>
-        <div>
-          <div className="text-xs uppercase tracking-wider text-white/50">Get in touch</div>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li>hello@nextgenentrade.com</li>
-            <li>+91 79 4000 0000</li>
-            <li>Ahmedabad, India</li>
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-white/5">
-        <div className="container-page py-6 flex flex-wrap items-center justify-between gap-3 text-xs text-white/40">
-          <div>© 2026 Nextgen Entrade. All rights reserved.</div>
-          <div>Crafted with care in Ahmedabad, India.</div>
-        </div>
-      </div>
-    </footer>
   );
 }
 
@@ -814,3 +772,5 @@ function Index() {
     </motion.div>
   );
 }
+
+export default Index;
