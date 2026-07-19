@@ -5,6 +5,7 @@ import {
   ArrowRight, ArrowUpRight, Menu, X, Sparkles, Shield, Users, Zap, Trophy, Globe,
   CheckCircle2, Quote, Mail, Phone, MapPin,
 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import heroImg from "@/assets/hero.jpg";
 import caseHealth from "@/assets/case-health.jpg";
 import caseFinance from "@/assets/case-finance.jpg";
@@ -80,11 +81,17 @@ function Nav() {
           <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
             <span className="font-display text-lg leading-none">N</span>
           </span>
-          <span className="font-display text-xl tracking-tight truncate">Nextgen Entrade</span>
+          <span className={`font-display text-xl tracking-tight truncate transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}>
+            Nextgen Entrade
+          </span>
         </a>
         <nav className="hidden lg:flex items-center gap-1">
           {NAV.map((n) => (
-            <a key={n.href} href={n.href} className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a
+              key={n.href}
+              href={n.href}
+              className={`px-3 py-2 text-sm transition-colors ${scrolled ? "text-muted-foreground hover:text-foreground" : "text-white/70 hover:text-white"}`}
+            >
               {n.label}
             </a>
           ))}
@@ -94,7 +101,11 @@ function Nav() {
             Start a project <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </a>
         </div>
-        <button className="lg:hidden p-2" onClick={() => setOpen(!open)} aria-label="Menu">
+        <button
+          className={`lg:hidden p-2 transition-colors ${scrolled ? "text-foreground" : "text-white"}`}
+          onClick={() => setOpen(!open)}
+          aria-label="Menu"
+        >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
@@ -176,12 +187,36 @@ function Marquee() {
 
 function About() {
   const points = [
-    { icon: Sparkles, title: "PhD-Led Innovation", body: "Co-founders (Dr. Aman Verma, Dr. Rina Kapoor, Dr. Karthik Menon) combine world-class research with deep industry know-how in our Innovation Lab." },
-    { icon: Globe, title: "Cross-Industry Expertise", body: "Banking, healthcare, manufacturing, retail, education — we've solved challenges across every major sector." },
-    { icon: Users, title: "End-to-End Ownership", body: "Requirements, UX, development, QA, maintenance — every phase stays under one roof for faster delivery." },
-    { icon: Zap, title: "Agile & Transparent", body: "Short sprints, regular demos, clear KPIs. We adapt as your needs evolve, never as an afterthought." },
-    { icon: Shield, title: "Quality & Security First", body: "ISO 27001 and CMMI Level 5 certified. Robust, scalable systems delivered on time and on budget." },
-    { icon: Trophy, title: "Global Scale", body: "350+ engineers, consultants, data scientists, and designers worldwide — cost-effective execution, world-class quality." },
+    {
+      icon: Sparkles,
+      title: "Dr. Aman Verma — CEO & Co-Founder",
+      body: "PhD in Computer Science (Boston University); previously led AI research teams at a Fortune 100 tech firm in Silicon Valley. Sets strategic direction and engages major clients at the executive level.",
+    },
+    {
+      icon: Zap,
+      title: "Dr. Rina Kapoor — COO & Co-Founder",
+      body: "PhD in Industrial Engineering (Boston University), focused on process optimization; former management consultant at a top-tier global firm. Oversees delivery excellence across every project.",
+    },
+    {
+      icon: Globe,
+      title: "Dr. Karthik Menon — CTO & Co-Founder",
+      body: "PhD in Data Science (Boston University); headed R&D for a leading cloud-native startup and holds multiple patents. Leads the Innovation Lab and defines our technology standards.",
+    },
+    {
+      icon: Shield,
+      title: "Ms. Priya Anand — CFO",
+      body: "Chartered Accountant (ICAI), MBA in Finance from IIM Ahmedabad; previously Finance Director at two global BPO firms. Manages financial strategy, budgeting, and investor relations.",
+    },
+    {
+      icon: Trophy,
+      title: "Mr. Neil Das — Head of Global Sales & Marketing",
+      body: "20 years in global IT sales, including senior leadership at a multinational ERP vendor; MBA from XLRI Jamshedpur. Drives new client acquisition and global GTM strategy.",
+    },
+    {
+      icon: Users,
+      title: "Ms. Kavita Rao — Head of Human Resources",
+      body: "MA in Organizational Psychology (TISS), with 15 years of HR leadership in technology firms. Leads talent management, diversity & inclusion, and employee wellbeing programs.",
+    },
   ];
   return (
     <section id="about" className="py-24 lg:py-32">
@@ -316,9 +351,15 @@ function Stats() {
 
 function Technology() {
   const cats = [
-    { title: "Mobile", items: ["Java", "React Native", "Swift", "Kotlin", "Objective-C", "Flutter"] },
-    { title: "Frontend", items: ["React", "Vue", "Svelte", "HTML5", "CSS3", "TypeScript"] },
-    { title: "Backend", items: ["Node.js", "Express", "Go", ".NET Core", "Python", "Java"] },
+    { title: "Mobile", items: ["Flutter", "Swift", "Objective-C", "Kotlin", "Java"] },
+    { title: "Frontend", items: ["React", "Vue.js", "Next.js", "TypeScript", "Web3.js"] },
+    { title: "Backend", items: ["Node.js", "Express.js", "MongoDB", "Python", "Java", "Spring Boot"] },
+    { title: "AI & Machine Learning", items: ["Predictive Analytics", "NLP", "Computer Vision", "Intelligent Automation"] },
+    { title: "Data & Big Data", items: ["Apache HBase", "Data Engineering", "Big Data Architecture", "Data Visualization"] },
+    { title: "Blockchain", items: ["Ethereum", "Hyperledger Fabric", "Smart Contracts", "Tokenization"] },
+    { title: "Cloud & DevOps", items: ["AWS", "Azure", "Google Cloud", "Kubernetes", "Docker", "Jenkins"] },
+    { title: "IoT", items: ["Real-Time Monitoring", "Remote Control", "Edge Devices", "Automated Systems"] },
+    { title: "Metaverse & AR", items: ["Metaverse", "Augmented Reality", "Digital Assets", "Immersive Environments"] },
     { title: "QA Testing", items: ["Selenium", "Postman", "TestNG", "Cypress", "Jest", "Appium"] },
     { title: "Analytics", items: ["Jira", "Power BI", "Tableau", "Looker", "Mixpanel", "Segment"] },
     { title: "Security", items: ["OWASP ZAP", "Vault", "Snyk", "SonarQube", "Burp", "Wiz"] },
@@ -353,14 +394,77 @@ function Technology() {
 }
 
 function Cases() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   const cases = [
-    { img: caseHealth, tag: "Healthcare & Life Sciences", title: "Patient-first mobile platforms with HIPAA-grade security." },
-    { img: caseFinance, tag: "Financial Services", title: "Real-time analytics and automations for global fintech." },
-    { img: caseEcom, tag: "E-commerce & Retail", title: "Omnichannel commerce with marketplace and ERP sync." },
-    { img: caseMfg, tag: "Manufacturing", title: "Warehouse automation and supply-chain intelligence." },
-    { img: caseEdu, tag: "Education", title: "Adaptive learning platforms for institutions worldwide." },
-    { img: caseMedia, tag: "Media & Broadcast", title: "Content pipelines and streaming for modern newsrooms." },
+    {
+      img: caseHealth,
+      tag: "Healthcare & Life Sciences",
+      title: "Revolutionizing Patient Engagement",
+      client: "MediCare Connect — a leading multi-specialty hospital chain",
+      challenge: "MediCare Connect faced significant challenges in patient engagement and appointment management. Patients struggled with long wait times, fragmented communication, and a cumbersome booking process, leading to dissatisfaction and operational inefficiencies.",
+      solution: "Nextgen Entrade developed a comprehensive, AI-powered patient engagement platform, accessible via a Flutter mobile application and a responsive web portal — with smart appointment scheduling, real-time queue management, and a secure patient communication module. A Python backend powered predictive scheduling algorithms, and a personalized health dashboard gave patients secure access to records, test results, and prescriptions.",
+      impact: "Patient satisfaction scores rose 35% within six months, driven by a 60% reduction in appointment booking time and a 45% decrease in physical waiting-room time. Administrative efficiency improved by 20%.",
+      quote: "Nextgen Entrade didn't just build an app; they built a bridge between our patients and our care. Their AI-driven approach to scheduling and intuitive design transformed our patient experience.",
+      author: "Dr. Anya Sharma, Chief Digital Officer, MediCare Connect",
+    },
+    {
+      img: caseFinance,
+      tag: "Financial Services",
+      title: "Securing and Streamlining Digital Transactions",
+      client: "Apex Financial Group — a global investment and wealth management firm",
+      challenge: "Apex Financial Group, handling vast amounts of sensitive client data and high-value transactions, needed to enhance its cybersecurity posture and streamline internal audits. Disparate systems led to manual reconciliation, potential vulnerabilities, and a lack of real-time oversight.",
+      solution: "Nextgen Entrade designed a custom Blockchain-based audit and compliance platform using Hyperledger Fabric, creating an immutable ledger for all transactions and audit trails. Built with a Java Spring Boot backend and a React.js frontend, it delivered real-time visibility and automated compliance checks, with Python-driven dashboards for anomaly detection and fraud prevention.",
+      impact: "Quarterly audit time dropped 70%, manual reconciliation costs fell 40%, and detected suspicious activity was reduced by 99.9% — significantly mitigating financial risk.",
+      quote: "The Blockchain solution from Nextgen Entrade has been a game-changer for our compliance and security. Their deep understanding of financial regulations combined with cutting-edge technology has given us unparalleled peace of mind.",
+      author: "Mr. David Chen, Head of Risk & Compliance, Apex Financial Group",
+    },
+    {
+      img: caseEcom,
+      tag: "E-commerce & Retail",
+      title: "Boosting Online Sales and Customer Loyalty",
+      client: "UrbanThreads — a fast-growing fashion e-commerce brand",
+      challenge: "Despite a strong product line, UrbanThreads struggled with low conversion rates and retention. Slow loading times, a clunky UX, and no personalized recommendations led to high bounce rates and abandoned carts.",
+      solution: "Nextgen Entrade rebuilt UrbanThreads' platform on a robust MERN Stack — a React.js frontend for a fast, intuitive UI, and Node.js with MongoDB for scalable backend performance. An AI-powered recommendation engine built with Python personalized product suggestions, alongside advanced SEO and content marketing.",
+      impact: "Conversion rates rose 50% and average order value climbed 30% within three months. Page load times improved 75%, and repeat purchases rose 25%.",
+      quote: "Nextgen Entrade transformed our online presence. Their MERN stack expertise and AI integration created an e-commerce experience that not only looks fantastic but performs exceptionally.",
+      author: "Ms. Sarah Jenkins, CEO, UrbanThreads",
+    },
+    {
+      img: caseMfg,
+      tag: "Manufacturing & Logistics",
+      title: "Optimizing Supply Chain Efficiency with IoT",
+      client: "GlobalFreight Solutions — a multinational logistics and supply chain provider",
+      challenge: "GlobalFreight faced inefficiencies tracking high-value cargo in remote environments. Manual checks and outdated tracking led to delays, increased risk of loss, and no real-time visibility across their global supply chain.",
+      solution: "Nextgen Entrade built an end-to-end IoT-enabled cargo monitoring system, with custom sensors transmitting real-time location, temperature, humidity, and shock data. A Python backend and MEAN Stack frontend gave GlobalFreight a comprehensive oversight dashboard, with Machine Learning-driven predictive analytics for proactive routing.",
+      impact: "98% real-time fleet visibility achieved, transit times cut 20%, cargo damage/loss down 15%, and 80% of potential delays mitigated proactively.",
+      quote: "Nextgen Entrade's IoT solution has given us unprecedented control and insight into our supply chain — saving us significant costs and elevating our service delivery.",
+      author: "Mr. Robert Davis, COO, GlobalFreight Solutions",
+    },
+    {
+      img: caseEdu,
+      tag: "Education & EdTech",
+      title: "Personalizing Learning Experiences",
+      client: "Academix University — a prestigious international university",
+      challenge: "Academix's existing LMS was rigid, lacked interactive features, and struggled to adapt to individual student needs — leading to lower engagement and retention in online courses.",
+      solution: "Nextgen Entrade built a next-generation, AI-driven personalized learning platform using Python for adaptive learning paths and intelligent content recommendations. The interactive frontend was built with Angular (MEAN stack), plus a dedicated Flutter mobile app for consistent access across devices.",
+      impact: "Student retention for online courses rose 25%, course completion rates rose 18%, and positive student feedback increased 40%.",
+      quote: "Nextgen Entrade's vision for personalized learning aligned perfectly with ours. Their AI and Flutter expertise delivered a platform that truly understands and adapts to each student.",
+      author: "Dr. Elena Petrova, Dean of Digital Learning, Academix University",
+    },
+    {
+      img: caseMedia,
+      tag: "Media & Entertainment",
+      title: "Delivering Immersive Digital Experiences",
+      client: "CineVerse Studios — a leading film production and digital content house",
+      challenge: "CineVerse wanted a groundbreaking interactive experience for their upcoming blockbuster, extending the narrative beyond the screen — needing a partner who could handle massive traffic and rich multimedia, including early Metaverse elements.",
+      solution: "Nextgen Entrade built an interactive fan engagement platform on a MERN Stack for scalability and real-time interaction, with AR features integrated into a Flutter mobile app letting fans interact with virtual characters in the real world. A Blockchain-based digital collectibles marketplace let fans own unique in-universe assets.",
+      impact: "5M+ unique users engaged in the first month, 70% AR adoption among mobile users, and $2M in digital-collectible revenue within the first week.",
+      quote: "Nextgen Entrade brought our vision for immersive storytelling to life. Their expertise in MERN, Flutter, Metaverse, and Blockchain allowed us to create an experience that truly captivated our audience.",
+      author: "Mr. Alex Thorne, Head of Digital Innovation, CineVerse Studios",
+    },
   ];
+
   return (
     <section id="cases" className="py-24 lg:py-32 bg-cream/50">
       <div className="container-page">
@@ -372,20 +476,62 @@ function Cases() {
           <a href="#contact" className="text-sm text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">See all <ArrowUpRight className="h-4 w-4" /></a>
         </div>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {cases.map((c) => (
-            <article key={c.tag} className="group rounded-2xl overflow-hidden bg-card hairline transition-all hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_oklch(0.22_0.05_265_/_0.3)]">
+          {cases.map((c, i) => (
+            <article
+              key={c.tag}
+              onClick={() => setOpenIndex(i)}
+              className="group cursor-pointer rounded-2xl overflow-hidden bg-card hairline transition-all hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_oklch(0.22_0.05_265_/_0.3)]"
+            >
               <div className="aspect-[4/3] overflow-hidden">
                 <img src={c.img} alt={c.tag} loading="lazy" width={1200} height={900} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
               <div className="p-6">
                 <div className="text-xs uppercase tracking-wider text-gold">{c.tag}</div>
                 <h3 className="mt-2 text-lg leading-snug" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>{c.title}</h3>
-                <div className="mt-4 inline-flex items-center gap-1 text-sm text-primary">Read case <ArrowRight className="h-4 w-4" /></div>
+                <button
+                  type="button"
+                  onClick={() => setOpenIndex(i)}
+                  className="mt-4 inline-flex items-center gap-1 text-sm text-primary hover:gap-2 transition-all"
+                >
+                  Read case <ArrowRight className="h-4 w-4" />
+                </button>
               </div>
             </article>
           ))}
         </div>
       </div>
+
+      <Dialog open={openIndex !== null} onOpenChange={(v) => !v && setOpenIndex(null)}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          {openIndex !== null && (
+            <>
+              <DialogHeader>
+                <div className="text-xs uppercase tracking-wider text-gold">{cases[openIndex].tag}</div>
+                <DialogTitle className="font-display text-2xl leading-snug">{cases[openIndex].title}</DialogTitle>
+                <DialogDescription>{cases[openIndex].client}</DialogDescription>
+              </DialogHeader>
+              <div className="space-y-5 text-sm text-muted-foreground leading-relaxed">
+                <div>
+                  <h4 className="font-medium text-foreground mb-1.5">Challenge</h4>
+                  <p>{cases[openIndex].challenge}</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-foreground mb-1.5">Solution</h4>
+                  <p>{cases[openIndex].solution}</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-foreground mb-1.5">Impact & Results</h4>
+                  <p>{cases[openIndex].impact}</p>
+                </div>
+                <blockquote className="border-l-2 border-gold pl-4 italic text-foreground/80">
+                  "{cases[openIndex].quote}"
+                  <footer className="mt-2 not-italic text-xs text-muted-foreground">— {cases[openIndex].author}</footer>
+                </blockquote>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
