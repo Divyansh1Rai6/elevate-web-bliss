@@ -9,19 +9,93 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WebsiteDevelopmentRouteImport } from './routes/website-development'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SocialMediaMarketingRouteImport } from './routes/social-media-marketing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as MobileApplicationDevelopmentRouteImport } from './routes/mobile-application-development'
+import { Route as EcommerceConsultancyRouteImport } from './routes/ecommerce-consultancy'
+import { Route as DigitalMarketingRouteImport } from './routes/digital-marketing'
+import { Route as CloudApplicationDevelopmentRouteImport } from './routes/cloud-application-development'
+import { Route as CaseStudyMediaRouteImport } from './routes/case-study-media'
+import { Route as CaseStudyManufacturingRouteImport } from './routes/case-study-manufacturing'
+import { Route as CaseStudyHealthcareRouteImport } from './routes/case-study-healthcare'
+import { Route as CaseStudyFinancialRouteImport } from './routes/case-study-financial'
+import { Route as CaseStudyEducationRouteImport } from './routes/case-study-education'
+import { Route as CaseStudyEcommerceRouteImport } from './routes/case-study-ecommerce'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WebsiteDevelopmentRoute = WebsiteDevelopmentRouteImport.update({
+  id: '/website-development',
+  path: '/website-development',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SocialMediaMarketingRoute = SocialMediaMarketingRouteImport.update({
+  id: '/social-media-marketing',
+  path: '/social-media-marketing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MobileApplicationDevelopmentRoute =
+  MobileApplicationDevelopmentRouteImport.update({
+    id: '/mobile-application-development',
+    path: '/mobile-application-development',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const EcommerceConsultancyRoute = EcommerceConsultancyRouteImport.update({
+  id: '/ecommerce-consultancy',
+  path: '/ecommerce-consultancy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DigitalMarketingRoute = DigitalMarketingRouteImport.update({
+  id: '/digital-marketing',
+  path: '/digital-marketing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CloudApplicationDevelopmentRoute =
+  CloudApplicationDevelopmentRouteImport.update({
+    id: '/cloud-application-development',
+    path: '/cloud-application-development',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CaseStudyMediaRoute = CaseStudyMediaRouteImport.update({
+  id: '/case-study-media',
+  path: '/case-study-media',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudyManufacturingRoute = CaseStudyManufacturingRouteImport.update({
+  id: '/case-study-manufacturing',
+  path: '/case-study-manufacturing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudyHealthcareRoute = CaseStudyHealthcareRouteImport.update({
+  id: '/case-study-healthcare',
+  path: '/case-study-healthcare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudyFinancialRoute = CaseStudyFinancialRouteImport.update({
+  id: '/case-study-financial',
+  path: '/case-study-financial',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudyEducationRoute = CaseStudyEducationRouteImport.update({
+  id: '/case-study-education',
+  path: '/case-study-education',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudyEcommerceRoute = CaseStudyEcommerceRouteImport.update({
+  id: '/case-study-ecommerce',
+  path: '/case-study-ecommerce',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareersRoute = CareersRouteImport.update({
@@ -38,39 +112,143 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/careers': typeof CareersRoute
+  '/case-study-ecommerce': typeof CaseStudyEcommerceRoute
+  '/case-study-education': typeof CaseStudyEducationRoute
+  '/case-study-financial': typeof CaseStudyFinancialRoute
+  '/case-study-healthcare': typeof CaseStudyHealthcareRoute
+  '/case-study-manufacturing': typeof CaseStudyManufacturingRoute
+  '/case-study-media': typeof CaseStudyMediaRoute
+  '/cloud-application-development': typeof CloudApplicationDevelopmentRoute
+  '/digital-marketing': typeof DigitalMarketingRoute
+  '/ecommerce-consultancy': typeof EcommerceConsultancyRoute
+  '/mobile-application-development': typeof MobileApplicationDevelopmentRoute
   '/privacy': typeof PrivacyRoute
+  '/social-media-marketing': typeof SocialMediaMarketingRoute
   '/terms': typeof TermsRoute
+  '/website-development': typeof WebsiteDevelopmentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/careers': typeof CareersRoute
+  '/case-study-ecommerce': typeof CaseStudyEcommerceRoute
+  '/case-study-education': typeof CaseStudyEducationRoute
+  '/case-study-financial': typeof CaseStudyFinancialRoute
+  '/case-study-healthcare': typeof CaseStudyHealthcareRoute
+  '/case-study-manufacturing': typeof CaseStudyManufacturingRoute
+  '/case-study-media': typeof CaseStudyMediaRoute
+  '/cloud-application-development': typeof CloudApplicationDevelopmentRoute
+  '/digital-marketing': typeof DigitalMarketingRoute
+  '/ecommerce-consultancy': typeof EcommerceConsultancyRoute
+  '/mobile-application-development': typeof MobileApplicationDevelopmentRoute
   '/privacy': typeof PrivacyRoute
+  '/social-media-marketing': typeof SocialMediaMarketingRoute
   '/terms': typeof TermsRoute
+  '/website-development': typeof WebsiteDevelopmentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/careers': typeof CareersRoute
+  '/case-study-ecommerce': typeof CaseStudyEcommerceRoute
+  '/case-study-education': typeof CaseStudyEducationRoute
+  '/case-study-financial': typeof CaseStudyFinancialRoute
+  '/case-study-healthcare': typeof CaseStudyHealthcareRoute
+  '/case-study-manufacturing': typeof CaseStudyManufacturingRoute
+  '/case-study-media': typeof CaseStudyMediaRoute
+  '/cloud-application-development': typeof CloudApplicationDevelopmentRoute
+  '/digital-marketing': typeof DigitalMarketingRoute
+  '/ecommerce-consultancy': typeof EcommerceConsultancyRoute
+  '/mobile-application-development': typeof MobileApplicationDevelopmentRoute
   '/privacy': typeof PrivacyRoute
+  '/social-media-marketing': typeof SocialMediaMarketingRoute
   '/terms': typeof TermsRoute
+  '/website-development': typeof WebsiteDevelopmentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/careers' | '/privacy' | '/terms'
+  fullPaths:
+    | '/'
+    | '/careers'
+    | '/case-study-ecommerce'
+    | '/case-study-education'
+    | '/case-study-financial'
+    | '/case-study-healthcare'
+    | '/case-study-manufacturing'
+    | '/case-study-media'
+    | '/cloud-application-development'
+    | '/digital-marketing'
+    | '/ecommerce-consultancy'
+    | '/mobile-application-development'
+    | '/privacy'
+    | '/social-media-marketing'
+    | '/terms'
+    | '/website-development'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/careers' | '/privacy' | '/terms'
-  id: '__root__' | '/' | '/careers' | '/privacy' | '/terms'
+  to:
+    | '/'
+    | '/careers'
+    | '/case-study-ecommerce'
+    | '/case-study-education'
+    | '/case-study-financial'
+    | '/case-study-healthcare'
+    | '/case-study-manufacturing'
+    | '/case-study-media'
+    | '/cloud-application-development'
+    | '/digital-marketing'
+    | '/ecommerce-consultancy'
+    | '/mobile-application-development'
+    | '/privacy'
+    | '/social-media-marketing'
+    | '/terms'
+    | '/website-development'
+  id:
+    | '__root__'
+    | '/'
+    | '/careers'
+    | '/case-study-ecommerce'
+    | '/case-study-education'
+    | '/case-study-financial'
+    | '/case-study-healthcare'
+    | '/case-study-manufacturing'
+    | '/case-study-media'
+    | '/cloud-application-development'
+    | '/digital-marketing'
+    | '/ecommerce-consultancy'
+    | '/mobile-application-development'
+    | '/privacy'
+    | '/social-media-marketing'
+    | '/terms'
+    | '/website-development'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CareersRoute: typeof CareersRoute
+  CaseStudyEcommerceRoute: typeof CaseStudyEcommerceRoute
+  CaseStudyEducationRoute: typeof CaseStudyEducationRoute
+  CaseStudyFinancialRoute: typeof CaseStudyFinancialRoute
+  CaseStudyHealthcareRoute: typeof CaseStudyHealthcareRoute
+  CaseStudyManufacturingRoute: typeof CaseStudyManufacturingRoute
+  CaseStudyMediaRoute: typeof CaseStudyMediaRoute
+  CloudApplicationDevelopmentRoute: typeof CloudApplicationDevelopmentRoute
+  DigitalMarketingRoute: typeof DigitalMarketingRoute
+  EcommerceConsultancyRoute: typeof EcommerceConsultancyRoute
+  MobileApplicationDevelopmentRoute: typeof MobileApplicationDevelopmentRoute
   PrivacyRoute: typeof PrivacyRoute
+  SocialMediaMarketingRoute: typeof SocialMediaMarketingRoute
   TermsRoute: typeof TermsRoute
+  WebsiteDevelopmentRoute: typeof WebsiteDevelopmentRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/website-development': {
+      id: '/website-development'
+      path: '/website-development'
+      fullPath: '/website-development'
+      preLoaderRoute: typeof WebsiteDevelopmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -78,11 +256,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/social-media-marketing': {
+      id: '/social-media-marketing'
+      path: '/social-media-marketing'
+      fullPath: '/social-media-marketing'
+      preLoaderRoute: typeof SocialMediaMarketingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mobile-application-development': {
+      id: '/mobile-application-development'
+      path: '/mobile-application-development'
+      fullPath: '/mobile-application-development'
+      preLoaderRoute: typeof MobileApplicationDevelopmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ecommerce-consultancy': {
+      id: '/ecommerce-consultancy'
+      path: '/ecommerce-consultancy'
+      fullPath: '/ecommerce-consultancy'
+      preLoaderRoute: typeof EcommerceConsultancyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/digital-marketing': {
+      id: '/digital-marketing'
+      path: '/digital-marketing'
+      fullPath: '/digital-marketing'
+      preLoaderRoute: typeof DigitalMarketingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cloud-application-development': {
+      id: '/cloud-application-development'
+      path: '/cloud-application-development'
+      fullPath: '/cloud-application-development'
+      preLoaderRoute: typeof CloudApplicationDevelopmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-study-media': {
+      id: '/case-study-media'
+      path: '/case-study-media'
+      fullPath: '/case-study-media'
+      preLoaderRoute: typeof CaseStudyMediaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-study-manufacturing': {
+      id: '/case-study-manufacturing'
+      path: '/case-study-manufacturing'
+      fullPath: '/case-study-manufacturing'
+      preLoaderRoute: typeof CaseStudyManufacturingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-study-healthcare': {
+      id: '/case-study-healthcare'
+      path: '/case-study-healthcare'
+      fullPath: '/case-study-healthcare'
+      preLoaderRoute: typeof CaseStudyHealthcareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-study-financial': {
+      id: '/case-study-financial'
+      path: '/case-study-financial'
+      fullPath: '/case-study-financial'
+      preLoaderRoute: typeof CaseStudyFinancialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-study-education': {
+      id: '/case-study-education'
+      path: '/case-study-education'
+      fullPath: '/case-study-education'
+      preLoaderRoute: typeof CaseStudyEducationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-study-ecommerce': {
+      id: '/case-study-ecommerce'
+      path: '/case-study-ecommerce'
+      fullPath: '/case-study-ecommerce'
+      preLoaderRoute: typeof CaseStudyEcommerceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/careers': {
@@ -105,8 +360,20 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CareersRoute: CareersRoute,
+  CaseStudyEcommerceRoute: CaseStudyEcommerceRoute,
+  CaseStudyEducationRoute: CaseStudyEducationRoute,
+  CaseStudyFinancialRoute: CaseStudyFinancialRoute,
+  CaseStudyHealthcareRoute: CaseStudyHealthcareRoute,
+  CaseStudyManufacturingRoute: CaseStudyManufacturingRoute,
+  CaseStudyMediaRoute: CaseStudyMediaRoute,
+  CloudApplicationDevelopmentRoute: CloudApplicationDevelopmentRoute,
+  DigitalMarketingRoute: DigitalMarketingRoute,
+  EcommerceConsultancyRoute: EcommerceConsultancyRoute,
+  MobileApplicationDevelopmentRoute: MobileApplicationDevelopmentRoute,
   PrivacyRoute: PrivacyRoute,
+  SocialMediaMarketingRoute: SocialMediaMarketingRoute,
   TermsRoute: TermsRoute,
+  WebsiteDevelopmentRoute: WebsiteDevelopmentRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

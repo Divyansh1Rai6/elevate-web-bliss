@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type ReactNode } from "react";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform, type Variants } from "framer-motion";
 import {
   ArrowRight, ArrowUpRight, Sparkles, Shield, Users, Zap, Trophy, Globe,
   CheckCircle2, Quote, Mail, Phone, MapPin,
 } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import heroImg from "@/assets/hero.jpg";
@@ -65,7 +64,7 @@ function Hero() {
             Empowering Global Digital Tomorrow From India
           </div>
           <h1 className="mt-6 font-display text-5xl sm:text-6xl lg:text-7xl leading-[0.98]">
-            Future-ready mobile apps <span className="italic text-gradient-gold">for startups</span> and enterprises.
+            Future-ready tech services <span className="italic text-gradient-gold">for startups</span> and enterprises.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-white/70 leading-relaxed">
             Our mobile division specializes in intuitive, high-performance applications that align with your unique KPIs. We embed the latest frameworks and UX best practices to accelerate adoption, engagement, and sustainable growth.
@@ -103,7 +102,7 @@ function Hero() {
 }
 
 function Marquee() {
-  const items = ["ISO 27001", "CMMI Level 5", "AWS Partner", "Google Cloud", "Microsoft Azure", "PhD-Led R&D", "Agile Delivery", "350+ Engineers"];
+  const items = ["ISO 9001:2015", "ISO/IEC 27001:2022", "CMMI Level 5", "PhD Scholar-Led R&D", "Agile Delivery", "350+ Engineers"];
   const loop = [...items, ...items];
   return (
     <div className="border-y border-black/10 bg-gold py-6 overflow-hidden">
@@ -187,12 +186,13 @@ function About() {
 }
 
 function Services() {
-  const services = [
-    { img: svcWeb, title: "Website Development", body: "Fast, accessible, SEO-ready marketing sites and web platforms crafted with modern frameworks and thoughtful UX." },
-    { img: svcMarketing, title: "Digital Marketing", body: "SEO, PPC, content, and social campaigns backed by analytics dashboards and measurable ROI." },
-    { img: svcCloud, title: "Cloud Application Development", body: "Scalable, secure cloud-native apps — architecture, migrations, DevOps, and enterprise-grade reliability." },
-    { img: svcMobile, title: "Mobile Application Development", body: "Intuitive, high-performance iOS & Android apps with the latest frameworks and UX best practices." },
-    { img: svcEcom, title: "E-commerce Consultancy", body: "Storefront strategy, marketplace onboarding, and conversion optimization across Shopify, Magento, and custom stacks." },
+   const services = [
+    { img: svcWeb, title: "Website Development", href: "/website-development", body: "Fast, accessible, SEO-ready marketing sites and web platforms crafted with modern frameworks and thoughtful UX." },
+    { img: svcMarketing, title: "Digital Marketing", href: "/digital-marketing", body: "SEO, PPC, content, and social campaigns backed by analytics dashboards and measurable ROI." },
+    { img: svcCloud, title: "Cloud Application Development", href: "/cloud-application-development", body: "Scalable, secure cloud-native apps — architecture, migrations, DevOps, and enterprise-grade reliability." },
+    { img: svcMobile, title: "Mobile Application Development", href: "/mobile-application-development", body: "Intuitive, high-performance iOS & Android apps with the latest frameworks and UX best practices." },
+    { img: svcEcom, title: "E-commerce Consultancy", href: "/ecommerce-consultancy", body: "Storefront strategy, marketplace onboarding, and conversion optimization across Shopify, Magento, and custom stacks." },
+    { img: svcMarketing, title: "Social Media Marketing", href: "/social-media-marketing", body: "Platform-native content, community management, and paid campaigns that build engaged, loyal audiences." },
   ];
   return (
     <section id="services" className="py-24 lg:py-32 bg-cream/50">
@@ -209,12 +209,13 @@ function Services() {
           {services.map((s, i) => (
             <motion.article
               key={s.title}
+              onClick={() => { window.location.href = s.href; }}
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -6 }}
-              className="group h-full flex flex-col overflow-hidden rounded-2xl bg-card hairline shadow-sm hover:shadow-[0_28px_60px_-24px_oklch(0.22_0.05_265_/_0.28)] transition-shadow duration-500"
+              className="group h-full flex flex-col overflow-hidden rounded-2xl bg-card hairline shadow-sm hover:shadow-[0_28px_60px_-24px_oklch(0.22_0.05_265_/_0.28)] transition-shadow duration-500 cursor-pointer"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <img
@@ -233,9 +234,9 @@ function Services() {
               <div className="flex flex-col flex-1 p-6">
                 <h3 className="text-xl font-medium leading-tight" style={{ fontFamily: "var(--font-sans)" }}>{s.title}</h3>
                 <p className="mt-3 text-sm text-muted-foreground leading-relaxed flex-1">{s.body}</p>
-                <div className="mt-6 inline-flex items-center gap-1 text-sm text-primary group-hover:gap-2 transition-all">
+                <a href={s.href} className="mt-6 inline-flex items-center gap-1 text-sm text-primary hover:gap-2 transition-all">
                   Learn more <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </div>
+                </a>
               </div>
             </motion.article>
           ))}
@@ -329,77 +330,14 @@ function Technology() {
 }
 
 function Cases() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
   const cases = [
-    {
-      img: caseHealth,
-      tag: "Healthcare & Life Sciences",
-      title: "Revolutionizing Patient Engagement",
-      client: "MediCare Connect — a leading multi-specialty hospital chain",
-      challenge: "MediCare Connect faced significant challenges in patient engagement and appointment management. Patients struggled with long wait times, fragmented communication, and a cumbersome booking process, leading to dissatisfaction and operational inefficiencies.",
-      solution: "Nextgen Entrade developed a comprehensive, AI-powered patient engagement platform, accessible via a Flutter mobile application and a responsive web portal — with smart appointment scheduling, real-time queue management, and a secure patient communication module. A Python backend powered predictive scheduling algorithms, and a personalized health dashboard gave patients secure access to records, test results, and prescriptions.",
-      impact: "Patient satisfaction scores rose 35% within six months, driven by a 60% reduction in appointment booking time and a 45% decrease in physical waiting-room time. Administrative efficiency improved by 20%.",
-      quote: "Nextgen Entrade didn't just build an app; they built a bridge between our patients and our care. Their AI-driven approach to scheduling and intuitive design transformed our patient experience.",
-      author: "Dr. Anya Sharma, Chief Digital Officer, MediCare Connect",
-    },
-    {
-      img: caseFinance,
-      tag: "Financial Services",
-      title: "Securing and Streamlining Digital Transactions",
-      client: "Apex Financial Group — a global investment and wealth management firm",
-      challenge: "Apex Financial Group, handling vast amounts of sensitive client data and high-value transactions, needed to enhance its cybersecurity posture and streamline internal audits. Disparate systems led to manual reconciliation, potential vulnerabilities, and a lack of real-time oversight.",
-      solution: "Nextgen Entrade designed a custom Blockchain-based audit and compliance platform using Hyperledger Fabric, creating an immutable ledger for all transactions and audit trails. Built with a Java Spring Boot backend and a React.js frontend, it delivered real-time visibility and automated compliance checks, with Python-driven dashboards for anomaly detection and fraud prevention.",
-      impact: "Quarterly audit time dropped 70%, manual reconciliation costs fell 40%, and detected suspicious activity was reduced by 99.9% — significantly mitigating financial risk.",
-      quote: "The Blockchain solution from Nextgen Entrade has been a game-changer for our compliance and security. Their deep understanding of financial regulations combined with cutting-edge technology has given us unparalleled peace of mind.",
-      author: "Mr. David Chen, Head of Risk & Compliance, Apex Financial Group",
-    },
-    {
-      img: caseEcom,
-      tag: "E-commerce & Retail",
-      title: "Boosting Online Sales and Customer Loyalty",
-      client: "UrbanThreads — a fast-growing fashion e-commerce brand",
-      challenge: "Despite a strong product line, UrbanThreads struggled with low conversion rates and retention. Slow loading times, a clunky UX, and no personalized recommendations led to high bounce rates and abandoned carts.",
-      solution: "Nextgen Entrade rebuilt UrbanThreads' platform on a robust MERN Stack — a React.js frontend for a fast, intuitive UI, and Node.js with MongoDB for scalable backend performance. An AI-powered recommendation engine built with Python personalized product suggestions, alongside advanced SEO and content marketing.",
-      impact: "Conversion rates rose 50% and average order value climbed 30% within three months. Page load times improved 75%, and repeat purchases rose 25%.",
-      quote: "Nextgen Entrade transformed our online presence. Their MERN stack expertise and AI integration created an e-commerce experience that not only looks fantastic but performs exceptionally.",
-      author: "Ms. Sarah Jenkins, CEO, UrbanThreads",
-    },
-    {
-      img: caseMfg,
-      tag: "Manufacturing & Logistics",
-      title: "Optimizing Supply Chain Efficiency with IoT",
-      client: "GlobalFreight Solutions — a multinational logistics and supply chain provider",
-      challenge: "GlobalFreight faced inefficiencies tracking high-value cargo in remote environments. Manual checks and outdated tracking led to delays, increased risk of loss, and no real-time visibility across their global supply chain.",
-      solution: "Nextgen Entrade built an end-to-end IoT-enabled cargo monitoring system, with custom sensors transmitting real-time location, temperature, humidity, and shock data. A Python backend and MEAN Stack frontend gave GlobalFreight a comprehensive oversight dashboard, with Machine Learning-driven predictive analytics for proactive routing.",
-      impact: "98% real-time fleet visibility achieved, transit times cut 20%, cargo damage/loss down 15%, and 80% of potential delays mitigated proactively.",
-      quote: "Nextgen Entrade's IoT solution has given us unprecedented control and insight into our supply chain — saving us significant costs and elevating our service delivery.",
-      author: "Mr. Robert Davis, COO, GlobalFreight Solutions",
-    },
-    {
-      img: caseEdu,
-      tag: "Education & EdTech",
-      title: "Personalizing Learning Experiences",
-      client: "Academix University — a prestigious international university",
-      challenge: "Academix's existing LMS was rigid, lacked interactive features, and struggled to adapt to individual student needs — leading to lower engagement and retention in online courses.",
-      solution: "Nextgen Entrade built a next-generation, AI-driven personalized learning platform using Python for adaptive learning paths and intelligent content recommendations. The interactive frontend was built with Angular (MEAN stack), plus a dedicated Flutter mobile app for consistent access across devices.",
-      impact: "Student retention for online courses rose 25%, course completion rates rose 18%, and positive student feedback increased 40%.",
-      quote: "Nextgen Entrade's vision for personalized learning aligned perfectly with ours. Their AI and Flutter expertise delivered a platform that truly understands and adapts to each student.",
-      author: "Dr. Elena Petrova, Dean of Digital Learning, Academix University",
-    },
-    {
-      img: caseMedia,
-      tag: "Media & Entertainment",
-      title: "Delivering Immersive Digital Experiences",
-      client: "CineVerse Studios — a leading film production and digital content house",
-      challenge: "CineVerse wanted a groundbreaking interactive experience for their upcoming blockbuster, extending the narrative beyond the screen — needing a partner who could handle massive traffic and rich multimedia, including early Metaverse elements.",
-      solution: "Nextgen Entrade built an interactive fan engagement platform on a MERN Stack for scalability and real-time interaction, with AR features integrated into a Flutter mobile app letting fans interact with virtual characters in the real world. A Blockchain-based digital collectibles marketplace let fans own unique in-universe assets.",
-      impact: "5M+ unique users engaged in the first month, 70% AR adoption among mobile users, and $2M in digital-collectible revenue within the first week.",
-      quote: "Nextgen Entrade brought our vision for immersive storytelling to life. Their expertise in MERN, Flutter, Metaverse, and Blockchain allowed us to create an experience that truly captivated our audience.",
-      author: "Mr. Alex Thorne, Head of Digital Innovation, CineVerse Studios",
-    },
+    { img: caseHealth, tag: "Healthcare & Life Sciences", title: "Patient-first mobile platforms with HIPAA-grade security.", href: "/case-study-healthcare" },
+    { img: caseFinance, tag: "Financial Services", title: "Real-time analytics and automations for global fintech.", href: "/case-study-financial" },
+    { img: caseEcom, tag: "E-commerce & Retail", title: "Omnichannel commerce with marketplace and ERP sync.", href: "/case-study-ecommerce" },
+    { img: caseMfg, tag: "Manufacturing", title: "Warehouse automation and supply-chain intelligence.", href: "/case-study-manufacturing" },
+    { img: caseEdu, tag: "Education", title: "Adaptive learning platforms for institutions worldwide.", href: "/case-study-education" },
+    { img: caseMedia, tag: "Media & Broadcast", title: "Content pipelines and streaming for modern newsrooms.", href: "/case-study-media" },
   ];
-
   return (
     <section id="cases" className="py-24 lg:py-32 bg-cream/50">
       <div className="container-page">
@@ -411,10 +349,10 @@ function Cases() {
           <a href="#contact" className="text-sm text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">See all <ArrowUpRight className="h-4 w-4" /></a>
         </div>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {cases.map((c, i) => (
+          {cases.map((c) => (
             <article
               key={c.tag}
-              onClick={() => setOpenIndex(i)}
+              onClick={() => { window.location.href = c.href; }}
               className="group cursor-pointer rounded-2xl overflow-hidden bg-card hairline transition-all hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_oklch(0.22_0.05_265_/_0.3)]"
             >
               <div className="aspect-[4/3] overflow-hidden">
@@ -423,112 +361,11 @@ function Cases() {
               <div className="p-6">
                 <div className="text-xs uppercase tracking-wider text-gold">{c.tag}</div>
                 <h3 className="mt-2 text-lg leading-snug" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>{c.title}</h3>
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(i)}
-                  className="mt-4 inline-flex items-center gap-1 text-sm text-primary hover:gap-2 transition-all"
-                >
+                <a href={c.href} className="mt-4 inline-flex items-center gap-1 text-sm text-primary hover:gap-2 transition-all">
                   Read case <ArrowRight className="h-4 w-4" />
-                </button>
+                </a>
               </div>
             </article>
-          ))}
-        </div>
-      </div>
-
-      <Dialog open={openIndex !== null} onOpenChange={(v) => !v && setOpenIndex(null)}>
-        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-          {openIndex !== null && (
-            <>
-              <DialogHeader>
-                <div className="text-xs uppercase tracking-wider text-gold">{cases[openIndex].tag}</div>
-                <DialogTitle className="font-display text-2xl leading-snug">{cases[openIndex].title}</DialogTitle>
-                <DialogDescription>{cases[openIndex].client}</DialogDescription>
-              </DialogHeader>
-              <div className="space-y-5 text-sm text-muted-foreground leading-relaxed">
-                <div>
-                  <h4 className="font-medium text-foreground mb-1.5">Challenge</h4>
-                  <p>{cases[openIndex].challenge}</p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-foreground mb-1.5">Solution</h4>
-                  <p>{cases[openIndex].solution}</p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-foreground mb-1.5">Impact & Results</h4>
-                  <p>{cases[openIndex].impact}</p>
-                </div>
-                <blockquote className="border-l-2 border-gold pl-4 italic text-foreground/80">
-                  "{cases[openIndex].quote}"
-                  <footer className="mt-2 not-italic text-xs text-muted-foreground">— {cases[openIndex].author}</footer>
-                </blockquote>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
-    </section>
-  );
-}
-
-function Pricing() {
-  const tiers = [
-    {
-      price: "₹10,000", tier: "Starter",
-      pros: ["Very low upfront cost", "Quick turnaround (days–week)", "Off-the-shelf platforms (WordPress, Shopify Basic)"],
-      cons: ["Very limited customization", "Minimal feature set", "No formal support or SLAs"],
-      best: "Solo entrepreneurs, micro-businesses.",
-    },
-    {
-      price: "₹1,00,000", tier: "Growth", featured: true,
-      pros: ["Semi-custom branding & UX refinement", "Up to ~500 SKUs and bulk upload", "Integrated payments & shipping", "SEO, analytics, CMS training", "1–3 months post-launch support"],
-      cons: ["Template-based core", "Enhancements beyond scope quoted separately"],
-      best: "Mid-market brands ready to scale.",
-    },
-    {
-      price: "₹10,00,000", tier: "Enterprise",
-      pros: ["Fully bespoke UX/UI (wireframes → final)", "Unlimited products, marketplace/ERP sync", "Enterprise performance & security audits", "Deep SEO/CRO, PWA / companion app", "Dedicated PM, SLA support, roadmap"],
-      cons: ["Higher initial investment", "Longer development cycle (months)"],
-      best: "Large enterprises with complex needs.",
-    },
-  ];
-  return (
-    <section id="pricing" className="py-24 lg:py-32">
-      <div className="container-page">
-        <div className="max-w-2xl">
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Pricing</div>
-          <h2 className="mt-4 font-display text-4xl sm:text-5xl leading-[1.05]">Choosing the right <span className="italic text-gradient-gold">e-commerce package</span>.</h2>
-          <p className="mt-6 text-muted-foreground leading-relaxed">
-            Investing in an e-commerce website is a critical decision that impacts your brand's online presence, customer experience, and long-term growth. Below we outline what to expect at each tier.
-          </p>
-        </div>
-        <div className="mt-14 grid lg:grid-cols-3 gap-5">
-          {tiers.map((t) => (
-            <div key={t.tier} className={`relative rounded-3xl p-8 flex flex-col ${t.featured ? "bg-[oklch(0.15_0.03_260)] text-white shadow-2xl lg:-mt-6" : "bg-card hairline"}`}>
-              {t.featured && <div className="absolute -top-3 left-8 rounded-full bg-gold px-3 py-1 text-xs font-medium text-[oklch(0.15_0.03_260)]">Most popular</div>}
-              <div className={`text-xs uppercase tracking-[0.2em] ${t.featured ? "text-white/60" : "text-muted-foreground"}`}>{t.tier}</div>
-              <div className="mt-3 font-display text-5xl">{t.price}</div>
-              <div className="mt-6 space-y-2.5">
-                {t.pros.map((p) => (
-                  <div key={p} className="flex items-start gap-2.5 text-sm">
-                    <CheckCircle2 className={`h-4 w-4 mt-0.5 shrink-0 ${t.featured ? "text-gold" : "text-primary"}`} />
-                    <span className={t.featured ? "text-white/90" : ""}>{p}</span>
-                  </div>
-                ))}
-              </div>
-              <div className={`mt-6 pt-6 border-t ${t.featured ? "border-white/10" : "border-border"}`}>
-                <div className={`text-xs uppercase tracking-wider mb-3 ${t.featured ? "text-white/50" : "text-muted-foreground"}`}>Trade-offs</div>
-                <ul className={`space-y-1.5 text-sm ${t.featured ? "text-white/70" : "text-muted-foreground"}`}>
-                  {t.cons.map((c) => <li key={c}>— {c}</li>)}
-                </ul>
-              </div>
-              <div className={`mt-6 text-sm ${t.featured ? "text-white/80" : "text-foreground"}`}>
-                <span className={`font-medium ${t.featured ? "text-gold" : "text-primary"}`}>Best for:</span> {t.best}
-              </div>
-              <a href="#contact" className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition ${t.featured ? "bg-gold text-[oklch(0.15_0.03_260)] hover:bg-[oklch(0.78_0.13_75)]" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
-                Get started <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
           ))}
         </div>
       </div>
@@ -647,8 +484,18 @@ function Contact() {
 }
 function LampContactCard() {
   const [awake, setAwake] = useState(false);
+  const [pulling, setPulling] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [sent, setSent] = useState(false);
+  const y = useMotionValue(0);
+  const cordHeight = useTransform(y, (v) => 46 + v);
+
+  const handleDragEnd = (_: unknown, info: { offset: { y: number } }) => {
+    setPulling(false);
+    if (info.offset.y > 55) {
+      setAwake(true);
+    }
+  };
 
   return (
     <div className="relative rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur p-8 flex flex-col items-center justify-center min-h-[440px] overflow-hidden">
@@ -662,26 +509,44 @@ function LampContactCard() {
 
       <AnimatePresence mode="wait">
         {!awake ? (
-          <motion.button
+          <motion.div
             key="lamp"
-            type="button"
-            onClick={() => setAwake(true)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.4 }}
-            className="relative z-10 flex flex-col items-center gap-4 group"
-            aria-label="Wake up the lamp to start a conversation"
+            className="relative z-10 flex flex-col items-center gap-3"
           >
-            <svg width="140" height="160" viewBox="0 0 140 160" fill="none">
-              <path d="M35 60 L105 60 L120 20 L20 20 Z" fill="oklch(0.72 0.13 75 / 0.15)" stroke="oklch(0.72 0.13 75)" strokeWidth="2" />
-              <path d="M55 42 q6 6 12 0" stroke="oklch(0.98 0.005 90)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-              <path d="M78 42 q6 6 12 0" stroke="oklch(0.98 0.005 90)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-              <line x1="70" y1="60" x2="70" y2="130" stroke="oklch(0.5 0.02 260)" strokeWidth="3" />
-              <ellipse cx="70" cy="135" rx="24" ry="6" fill="oklch(0.3 0.03 260)" />
-            </svg>
-            <span className="text-sm text-white/60 group-hover:text-white transition-colors">Click to wake me up</span>
-          </motion.button>
+            <div className="relative" style={{ width: 140, height: 190 }}>
+              <svg width="140" height="160" viewBox="0 0 140 160" fill="none" className="absolute top-0 left-0">
+                <path d="M35 60 L105 60 L120 20 L20 20 Z" fill="oklch(0.72 0.13 75 / 0.15)" stroke="oklch(0.72 0.13 75)" strokeWidth="2" />
+                <path d="M55 42 q6 6 12 0" stroke="oklch(0.98 0.005 90)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                <path d="M78 42 q6 6 12 0" stroke="oklch(0.98 0.005 90)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                <line x1="70" y1="60" x2="70" y2="130" stroke="oklch(0.5 0.02 260)" strokeWidth="3" />
+                <ellipse cx="70" cy="135" rx="24" ry="6" fill="oklch(0.3 0.03 260)" />
+              </svg>
+
+              {/* pull cord */}
+              <motion.div
+                className="absolute bg-white/40 origin-top"
+                style={{ left: 96, top: 60, width: 2, height: cordHeight }}
+              />
+              <motion.div
+                drag="y"
+                dragConstraints={{ top: 0, bottom: 70 }}
+                dragElastic={0.2}
+                dragSnapToOrigin
+                onDragStart={() => setPulling(true)}
+                onDragEnd={handleDragEnd}
+                style={{ left: 96, top: 60, y }}
+                whileDrag={{ scale: 1.15 }}
+                className="absolute -ml-2 w-4 h-4 rounded-full bg-[oklch(0.72_0.13_75)] shadow-lg cursor-grab active:cursor-grabbing"
+              />
+            </div>
+            <span className="text-sm text-white/60">
+              {pulling ? "Keep pulling…" : "Pull the cord to wake me up"}
+            </span>
+          </motion.div>
         ) : (
           <motion.div
             key="form"
@@ -747,7 +612,6 @@ function Index() {
     <Stats key="stats" />,
     <Technology key="technology" />,
     <Cases key="cases" />,
-    <Pricing key="pricing" />,
     <Process key="process" />,
     <Testimonials key="testimonials" />,
     <Contact key="contact" />,
