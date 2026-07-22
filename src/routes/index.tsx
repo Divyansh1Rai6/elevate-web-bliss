@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
-import heroImg from "@/assets/hero.jpg";
+import heroImg from "@/assets/hero.webp";
 import caseHealth from "@/assets/case-health.jpg";
 import caseFinance from "@/assets/case-finance.jpg";
 import caseEcom from "@/assets/case-ecom.jpg";
@@ -67,7 +67,7 @@ function Hero() {
             Future-ready tech services <span className="italic text-gradient-gold">for startups</span> and enterprises.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-white/70 leading-relaxed">
-            Our mobile division specializes in intuitive, high-performance applications that align with your unique KPIs. We embed the latest frameworks and UX best practices to accelerate adoption, engagement, and sustainable growth.
+            Future ready tech services for startups and small & medium bussinesses.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a href="#contact" className="group inline-flex items-center gap-2 rounded-full bg-[oklch(0.72_0.13_75)] px-5 py-3 text-sm font-medium text-[oklch(0.15_0.03_260)] hover:bg-[oklch(0.78_0.13_75)] transition">
@@ -85,7 +85,7 @@ function Hero() {
         </div>
         <div className="relative">
           <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl animate-float-slow">
-            <img src={heroImg} alt="" width={1600} height={1200} className="w-full h-auto" />
+           <img src={heroImg} alt="" width={1600} height={1200} className="w-full h-auto" />
           </div>
           <div className="absolute -bottom-6 -left-6 hidden sm:block rounded-2xl bg-white/95 text-foreground p-4 shadow-xl backdrop-blur">
             <div className="text-3xl font-display">93%+</div>
