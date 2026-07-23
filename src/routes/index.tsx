@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Hero3D } from "@/components/site/Hero3D";
 import { useRef, useState, type ReactNode } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform, type Variants } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform, useScroll, type Variants } from "framer-motion";
 import {
   ArrowRight, ArrowUpRight, Sparkles, Shield, Users, Zap, Trophy, Globe,
   CheckCircle2, Quote, Mail, Phone, MapPin,
@@ -53,8 +54,11 @@ function Reveal({
 }
 
 function Hero() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], [0, 80]);
   return (
-    <section id="home" className="relative overflow-hidden pt-32 pb-24 lg:pt-40 lg:pb-32 bg-[oklch(0.15_0.03_260)] text-[oklch(0.98_0.005_90)]">
+    <section id="home" ref={heroRef} className="relative overflow-hidden pt-32 pb-24 lg:pt-40 lg:pb-32 bg-[oklch(0.15_0.03_260)] text-[oklch(0.98_0.005_90)]">
       <div aria-hidden className="absolute inset-0 opacity-60"
         style={{ background: "radial-gradient(60% 60% at 80% 20%, oklch(0.35 0.09 265 / 0.5), transparent 60%), radial-gradient(50% 50% at 10% 80%, oklch(0.72 0.13 75 / 0.15), transparent 60%)" }} />
       <div className="container-page relative grid lg:grid-cols-[1.05fr_0.95fr] gap-12 items-center">
@@ -83,9 +87,13 @@ function Hero() {
             <span className="inline-flex items-center gap-2"><Users className="h-4 w-4" /> 350+ Engineers</span>
           </div>
         </div>
-        <div className="relative">
-          <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl animate-float-slow">
-           <img src={heroImg} alt="" width={1600} height={1200} className="w-full h-auto" />
+        <motion.div className="relative" style={{ y: imgY }}>
+          <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-[4/3]">
+            <img src={heroImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-[oklch(0.15_0.03_260)]/40" />
+            <div className="absolute inset-0">
+              <Hero3D />
+            </div>
           </div>
           <div className="absolute -bottom-6 -left-6 hidden sm:block rounded-2xl bg-white/95 text-foreground p-4 shadow-xl backdrop-blur">
             <div className="text-3xl font-display">93%+</div>
@@ -95,7 +103,7 @@ function Hero() {
             <div className="text-3xl font-display">250+</div>
             <div className="text-xs text-muted-foreground">Solutions Delivered</div>
           </div>
-        </div>
+         </motion.div>
       </div>
     </section>
   );
@@ -498,7 +506,7 @@ function LampContactCard() {
   };
 
   return (
-    <div className="relative rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur p-8 flex flex-col items-center justify-center min-h-[440px] overflow-hidden">
+    <motion.div layout className="relative rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur p-8 flex flex-col items-center justify-center min-h-[440px] overflow-hidden">
       <motion.div
         aria-hidden
         className="absolute w-72 h-72 rounded-full blur-3xl pointer-events-none"
@@ -583,14 +591,14 @@ function LampContactCard() {
                 <label className="text-xs uppercase tracking-wider text-white/60">Project details</label>
                 <textarea name="message" rows={4} required className="mt-2 w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/30 transition" placeholder="Tell us about your goals…" />
               </div>
-              <button type="submit" className="group w-full inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-medium text-[oklch(0.15_0.03_260)] hover:bg-[oklch(0.78_0.13_75)] transition">
+              <motion.button whileTap={{ scale: 0.97 }} type="submit" className="group w-full inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-medium text-[oklch(0.15_0.03_260)] hover:bg-[oklch(0.78_0.13_75)] transition">
                 {sent ? "Thank you — we'll be in touch" : "Send inquiry"} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </button>
+              </motion.button>
             </form>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
 function Field({ label, name, type = "text", placeholder }: { label: string; name: string; type?: string; placeholder?: string }) {

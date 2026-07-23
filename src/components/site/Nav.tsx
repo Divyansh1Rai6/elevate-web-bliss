@@ -48,9 +48,9 @@ export function Nav() {
           ))}
         </nav>
         <div className="hidden lg:flex items-center gap-3">
-          <a href="/#contact" className="group inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition">
+          <motion.a whileTap={{ scale: 0.95 }} href="/#contact" className="group inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition">
             Start a project <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          </motion.a>
         </div>
         <button
           className={`lg:hidden p-2 transition-colors ${scrolled ? "text-foreground" : "text-white"}`}
